@@ -33,7 +33,7 @@ class UploadsController < ApplicationController
   end
 
   def upload_filtered_file
-    if ALLOWED_FILE_TYPES.include? File.extname(file_params[:file]))
+    if ALLOWED_FILE_TYPES.include? File.extname(file_params[:file])
       upload_file
     else
       render json: "Only .png extension file is allowed to upload", status: 422
@@ -43,5 +43,4 @@ class UploadsController < ApplicationController
   def session
     @session ||= GoogleDrive::Session.from_config("config/google_drive.json")
   end
-
 end
