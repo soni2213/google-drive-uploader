@@ -1,4 +1,3 @@
 Rails.application.routes.draw do
-  resources :upload
-  root 'upload#upload_local_file'
+  post '/upload', to: 'upload#upload'
 end
