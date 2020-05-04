@@ -27,6 +27,7 @@ Install the dependencies and start the server.
 gem install bundler # if not already
 bundle install
 rails console
+
 # Perform the below in the rails console
 > drive_session = GoogleDrive::Session.from_config('config/google_drive.json')
 > # open the google link that comes up, grant the permissions, and paste the resultant code back in your terminal.
