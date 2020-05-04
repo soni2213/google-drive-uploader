@@ -23,12 +23,14 @@ class UploadsController < ApplicationController
     params.permit(:file, :enable_filter)
   end
 
+  # To create a folder in google drive
   def create_collection
     return if collection
 
     google_session.root_collection.create_subcollection('riskcovry_uploads')
   end
 
+  # To upload a file in specific folder
   def upload_file
     file = google_session.upload_from_file(file_params[:file].tempfile,
                                            file_params[:file].original_filename)
@@ -37,18 +39,21 @@ class UploadsController < ApplicationController
     render json: 'Upload Successful'
   end
 
+  # To upload only .png extension file
   def upload_filtered_file
     if ALLOWED_FILE_TYPES.include? File.extname(file_params[:file])
       upload_file
     else
-      render json: 'Only .png extension file is allowed to upload', status: 422
+      render json: "Only #{ALLOWED_FILE_TYPES.join(', ')} extension file is allowed to upload", status: 422
     end
   end
 
+  # To get session
   def google_session
     @google_session ||= GoogleDrive::Session.from_config('config/google_drive.json')
   end
 
+  # To get specific folder
   def collection
     @collection ||= google_session.collection_by_title('riskcovry_uploads')
   end
